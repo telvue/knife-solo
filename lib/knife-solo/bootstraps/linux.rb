@@ -71,7 +71,7 @@ module KnifeSolo::Bootstraps
       return @distro if @distro
       @distro = case issue
       when %r{Debian GNU/Linux [6789]}
-        {:type => (x86? ? "debianoid_omnibus" : "debianoid_gem")}
+        {:type => "debianoid_omnibus"}
       when %r{Debian}
         {:type => "debianoid_gem"}
       when %r{Raspbian}
@@ -79,7 +79,7 @@ module KnifeSolo::Bootstraps
       when %r{Linux Mint}
         {:type => "debianoid_gem"}
       when %r{Ubuntu}i
-        {:type => (x86? ? "debianoid_omnibus" : "debianoid_gem")}
+        {:type => "debianoid_omnibus"}
       when %r{Linaro}
         {:type => "debianoid_gem"}
       when %r{CentOS}
