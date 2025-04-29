@@ -1,6 +1,6 @@
 module KnifeSolo
   def self.version
-    '0.8.1'
+    '0.8.2'
   end
 
   def self.post_install_message
