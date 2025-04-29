@@ -284,18 +284,18 @@ class Chef
         file.unlink
       end
 
-      def rsync(source_path, target_path, extra_opts = ['--delete-after', '-zt'])
+#
+      def rsync(source_path, target_path, extra_opts = ['-zt'])
         if config[:ssh_gateway]
           ssh_command = "ssh -TA #{config[:ssh_gateway]} ssh -T -o StrictHostKeyChecking=no #{ssh_args}"
         else
           ssh_command = "ssh #{ssh_args}"
         end
 
-        cmd = ['rsync', '-rL', rsync_debug, rsync_permissions, %Q{--rsh=#{ssh_command}}]
+        cmd = ['rsync', '-rL', rsync_debug, rsync_permissions, %Q{--rsh=#{ssh_command + ':' + adjust_rsync_path_on_node(target_path)}}]
         cmd += extra_opts
         cmd += rsync_excludes.map { |ignore| "--exclude=#{ignore}" }
-        cmd += [ adjust_rsync_path_on_client(source_path),
-                 ':' + adjust_rsync_path_on_node(target_path) ]
+        cmd += [ adjust_rsync_path_on_client(source_path) ]
 
         cmd = cmd.compact
 
